@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Happy Mother's Day 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif;}
+  html,body{min-height:100vh;background:#fce8f0;}
+
+  /* checkered background */
+  #bg{position:fixed;inset:0;z-index:-1;
+    background-image:linear-gradient(45deg,#f5b8ce 25%,transparent 25%),linear-gradient(-45deg,#f5b8ce 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#f5b8ce 75%),linear-gradient(-45deg,transparent 75%,#f5b8ce 75%);
+    background-size:36px 36px;background-position:0 0,0 18px,18px -18px,-18px 0;background-color:#fce8f0;}
+
+  /* dot nav */
+  #dots{position:fixed;top:10px;left:0;right:0;display:flex;justify-content:center;gap:5px;z-index:100;}
+  .dot{height:7px;border-radius:99px;background:#f0a0c0;transition:all .4s ease;}
+  .dot.active{width:20px;background:#e8186d;}
+  .dot.inactive{width:7px;}
+
+  /* wrapper */
+  #app{max-width:430px;margin:0 auto;min-height:100vh;position:relative;overflow:hidden;}
+
+  /* screen transitions */
+  .screen{min-height:100vh;animation:sIn .45s cubic-bezier(.22,1,.36,1) both;}
+  @keyframes sIn{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:translateX(0)}}
+
+  /* shared layout */
+  .center{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:0 24px;text-align:center;}
+  .card{background:white;border-radius:28px;padding:44px 28px;max-width:360px;width:100%;box-shadow:0 8px 40px #e8186d18;text-align:center;}
+
+  /* gradient text */
+  .grad-text{background:linear-gradient(135deg,#e8186d,#f06090);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+  /* button */
+  .btn{background:linear-gradient(135deg,#e8186d,#f06090);color:white;border:none;border-radius:99px;padding:14px 36px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 5px 20px #e8186d44;transition:all .15s ease;font-family:'Poppins',sans-serif;}
+  .btn:active{transform:scale(0.95);box-shadow:0 2px 8px #e8186d66;}
+
+  /* fade-in utility */
+  .fade{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+  .fade.show{opacity:1;transform:translateY(0);}
+
+  /* ── LANDING ── */
+  #screen-landing h1{font-size:2.6rem;font-weight:900;margin-bottom:4px;}
+  #landing-sub{color:#e8186d;font-size:.8rem;margin-bottom:4px;}
+  #landing-cat{display:block;margin:0 auto;transition:transform .7s ease;}
+  #landing-cat.bounce{transform:translateY(-7px);}
+  #landing-p{color:#aaa;margin-bottom:28px;}
+
+  /* ── RAINBOW ── */
+  #rainbow-arcs path{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);}
+  .arc-animate{animation:arcDraw .55s ease both;}
+  @keyframes arcDraw{from{stroke-dashoffset:var(--len)}to{stroke-dashoffset:0}}
+
+  /* ── MEMORY ── */
+  #mem-line{stroke-dasharray:200;stroke-dashoffset:200;transition:stroke-dashoffset 1s ease;}
+  #mem-line.drawn{stroke-dashoffset:0;}
+  .mem-photo{border:3px solid #e8186d;border-radius:16px;overflow:hidden;box-shadow:0 6px 24px #e8186d22;}
+  .mem-emoji{height:160px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;}
+
+  /* ── WHAT YOU MEAN ── */
+  #whatyoumean-section{padding:16px;}
+  #center-avatar{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    background:linear-gradient(135deg,#fdd6e8,#ffe4c4);border-radius:50%;width:120px;height:120px;
+    display:flex;align-items:center;justify-content:center;font-size:3.5rem;
+    box-shadow:0 0 30px #e8186d33;cursor:pointer;}
+  .tag-chip{position:absolute;opacity:0;transform:scale(.5);
+    transition:all .45s cubic-bezier(.34,1.56,.64,1);
+    background:white;border-radius:99px;padding:7px 15px;font-size:.76rem;font-weight:700;
+    color:#e8186d;box-shadow:0 4px 14px #e8186d18;white-space:nowrap;border:1.5px solid #fdd6e8;}
+  .tag-chip.show{opacity:1;transform:scale(1);}
+  #heart-btn{width:62px;height:62px;border-radius:50%;background:linear-gradient(135deg,#e8186d,#f06090);
+    display:flex;align-items:center;justify-content:center;font-size:1.8rem;
+    box-shadow:0 0 0 4px #e8186d0a;transition:all .9s ease;cursor:pointer;border:none;}
+  #heart-btn.pulse{box-shadow:0 0 0 16px #e8186d1a;transform:scale(1.14);}
+
+  /* ── TIMELINE ── */
+  #timeline-section{min-height:100vh;padding:64px 16px 32px;}
+  .tl-wrap{position:relative;max-width:400px;margin:0 auto;}
+  .tl-line{position:absolute;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,#e8186d,#f06090);transform:translateX(-50%);}
+  .tl-item{display:flex;padding-bottom:28px;position:relative;}
+  .tl-item.left{justify-content:flex-start;padding-right:50%;}
+  .tl-item.right{justify-content:flex-end;padding-left:50%;}
+  .tl-dot{position:absolute;left:50%;top:18px;transform:translateX(-50%);width:13px;height:13px;border-radius:50%;background:#e8186d;z-index:2;box-shadow:0 0 0 4px #fdd6e8;}
+  .tl-card{background:white;border-radius:16px;padding:14px 16px;max-width:90%;box-shadow:0 4px 16px #e8186d0e;opacity:0;transition:all .6s ease;}
+  .tl-card.left-enter{transform:translateX(-30px);}
+  .tl-card.right-enter{transform:translateX(30px);}
+  .tl-card.visible{opacity:1;transform:translateX(0)!important;}
+  .tl-year{font-weight:800;color:#e8186d;font-size:1.1rem;margin-bottom:6px;}
+  .tl-text{color:#666;font-size:.87rem;line-height:1.55;}
+
+  /* ── CROWN ── */
+  #girl-group{transition:transform 2s cubic-bezier(.4,0,.2,1);}
+  #crown-on-mom{opacity:0;transition:opacity .4s ease .2s;}
+  #crown-on-mom.show{opacity:1;}
+  #crown-in-hand{transition:transform 2s cubic-bezier(.4,0,.2,1),opacity .3s ease;}
+  #girl-arm{transition:all 2s ease;}
+
+  /* ── WOW ── */
+  #flip-box{perspective:800px;cursor:pointer;margin-bottom:24px;}
+  #flip-inner{display:inline-block;position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.4,0,.2,1);width:100%;height:96px;}
+  #flip-inner.flipped{transform:rotateX(180deg);}
+  .flip-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:5.5rem;color:#e8186d;}
+  #flip-front{transform:rotateX(180deg);}
+  #flip-back{}
+  #wow-mom-text{display:none;}
+
+  /* ── CANDLE ── */
+  @keyframes flicker{0%,100%{transform:translate(1.5px,-2px)}50%{transform:translate(-1.5px,0)}}
+  #flame-group{animation:flicker .13s ease infinite;display:none;}
+  #flame-group.lit{display:block;}
+  #glow-ring{position:absolute;top:-24px;left:50%;transform:translateX(-50%);width:72px;height:72px;border-radius:50%;background:radial-gradient(circle,#ffee0055 0%,transparent 70%);filter:blur(8px);display:none;}
+  #glow-ring.lit{display:block;}
+  #candle-wrap{position:relative;display:inline-block;}
+
+  /* ── LETTER ── */
+  #envelope-wrap{cursor:pointer;filter:drop-shadow(0 10px 28px #e8186d33);}
+  #env-flap{transform-origin:130px 40px;transition:transform .7s ease;}
+  #env-flap.open{transform:rotateX(180deg);}
+  #env-seal{transition:opacity .3s ease;}
+  #letter-content{display:none;width:100%;max-width:400px;}
+  #letter-content.show{display:block;animation:letterUp .8s cubic-bezier(.22,1,.36,1) both;}
+  @keyframes letterUp{from{opacity:0;transform:translateY(50px)}to{opacity:1;transform:translateY(0)}}
+  .letter-stripe{position:absolute;top:0;left:0;right:0;height:10px;background:repeating-linear-gradient(90deg,#e8186d 0,#e8186d 20px,#f06090 20px,#f06090 40px,#fdd6e8 40px,#fdd6e8 60px);}
+  .letter-body{color:#444;font-size:.9rem;line-height:1.9;font-family:Georgia,serif;}
+
+  /* ── FINAL ── */
+  @keyframes floatHeart{from{transform:translateY(0) scale(1);opacity:1}to{transform:translateY(-92vh) scale(.4);opacity:0}}
+  .floating-heart{position:fixed;bottom:8%;font-size:1.4rem;animation:floatHeart 3.5s ease-out forwards;pointer-events:none;}
+
+  /* ── PULSE animation ── */
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div id="bg"></div>
+<div id="dots"></div>
+<div id="app"></div>
+
+<script>
+// ══════════════════════════════
+// STATE
+// ══════════════════════════════
+const SCREENS = ['landing','rainbow','memory','whatyoumean','timeline','crown','wow','candle','letter','final'];
+let currentScreen = 0;
+
+// ══════════════════════════════
+// NAVIGATION
+// ══════════════════════════════
+function renderDots() {
+  const dots = document.getElementById('dots');
+  dots.innerHTML = SCREENS.map((_, i) =>
+    `<div class="dot ${i === currentScreen ? 'active' : 'inactive'}"></div>`
+  ).join('');
+}
+
+function goNext() {
+  currentScreen = Math.min(currentScreen + 1, SCREENS.length - 1);
+  renderDots();
+  renderScreen();
+}
+
+function renderScreen() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  const div = document.createElement('div');
+  div.className = 'screen';
+  app.appendChild(div);
+  screens[currentScreen](div);
+}
+
+// ══════════════════════════════
+// LANDING
+// ══════════════════════════════
+function screenLanding(el) {
+  el.innerHTML = `
+  <div class="center" id="screen-landing">
+    <div class="fade" id="l1">
+      <h1 class="grad-text">Hey Mamma 💖</h1>
+    </div>
+    <div class="fade" id="l2" style="margin-bottom:8px">
+      <svg id="landing-cat" width="140" height="158" viewBox="0 0 140 158">
+        <ellipse cx="70" cy="102" rx="40" ry="44" fill="white" stroke="#f5d0e0" stroke-width="1.5"/>
+        <circle cx="70" cy="58" r="32" fill="white" stroke="#f5d0e0" stroke-width="1.5"/>
+        <ellipse cx="70" cy="27" rx="6" ry="11" fill="#6db33f" transform="rotate(-8,70,27)"/>
+        <ellipse cx="73" cy="26" rx="4" ry="7" fill="#90d050" transform="rotate(-8,73,26)"/>
+        <circle cx="60" cy="55" r="4" fill="#222"/><circle cx="80" cy="55" r="4" fill="#222"/>
+        <circle cx="61.5" cy="53" r="1.3" fill="white"/><circle cx="81.5" cy="53" r="1.3" fill="white"/>
+        <ellipse cx="53" cy="62" rx="5.5" ry="3" fill="#ffb3cc" opacity=".6"/>
+        <ellipse cx="87" cy="62" rx="5.5" ry="3" fill="#ffb3cc" opacity=".6"/>
+        <path d="M63 65 Q70 72 77 65" stroke="#e8186d" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <ellipse cx="30" cy="107" rx="9" ry="20" fill="white" stroke="#f5d0e0" stroke-width="1.5" transform="rotate(14,30,107)"/>
+        <ellipse cx="110" cy="107" rx="9" ry="20" fill="white" stroke="#f5d0e0" stroke-width="1.5" transform="rotate(-14,110,107)"/>
+        <ellipse cx="55" cy="142" rx="10" ry="7" fill="white" stroke="#f5d0e0" stroke-width="1.5"/>
+        <ellipse cx="85" cy="142" rx="10" ry="7" fill="white" stroke="#f5d0e0" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="fade" id="l3">
+      <p id="landing-p">There is something for you ✨</p>
+      <button class="btn" onclick="goNext()">Open 💌</button>
+    </div>
+  </div>`;
+
+  setTimeout(() => document.getElementById('l1').classList.add('show'), 100);
+  setTimeout(() => document.getElementById('l2').classList.add('show'), 350);
+  setTimeout(() => document.getElementById('l3').classList.add('show'), 600);
+
+  // bounce cat
+  let b = false;
+  const cat = document.getElementById('landing-cat');
+  setInterval(() => {
+    b = !b;
+    cat.style.transform = b ? 'translateY(-7px)' : 'translateY(0)';
+  }, 1400);
+}
+
+// ══════════════════════════════
+// RAINBOW
+// ══════════════════════════════
+function screenRainbow(el) {
+  const arcs = [
+    {r:88,c:"#6a0dad"},{r:75,c:"#4a90d9"},{r:62,c:"#50c060"},
+    {r:49,c:"#f0d030"},{r:36,c:"#f08020"},{r:23,c:"#e83040"}
+  ];
+
+  const arcPaths = arcs.map(({r,c},i) => {
+    const len = Math.PI * r;
+    return `<path d="M ${105-r} 105 A ${r} ${r} 0 0 1 ${105+r} 105" fill="none" stroke="${c}" stroke-width="9" stroke-linecap="round"
+      stroke-dasharray="${len}" stroke-dashoffset="${len}"
+      style="animation:arcDraw${i} .55s ease both;animation-delay:${i*.2}s;animation-fill-mode:backwards;"
+      id="arc${i}"/>`;
+  }).join('');
+
+  const styleAnims = arcs.map(({r},i) => {
+    const len = Math.PI*r;
+    return `@keyframes arcDraw${i}{from{stroke-dashoffset:${len}}to{stroke-dashoffset:0}}`;
+  }).join('');
+
+  el.innerHTML = `
+  <style>${styleAnims}</style>
+  <div class="center">
+    <div class="card">
+      <svg width="210" height="115" viewBox="0 0 210 115" style="overflow:visible;display:block;margin:0 auto;">${arcPaths}</svg>
+      <div id="rainbow-text" style="opacity:0;transform:translateY(14px);transition:all .7s ease;margin-top:22px;">
+        <p style="font-size:1.1rem;font-weight:700;color:#555;line-height:1.6;">You are rainbow in my clouds 🌈</p>
+        <div style="margin-top:22px;"><button class="btn" onclick="goNext()">Continue 💖</button></div>
+      </div>
+    </div>
+  </div>`;
+
+  setTimeout(() => {
+    const t = document.getElementById('rainbow-text');
+    t.style.opacity = '1'; t.style.transform = 'translateY(0)';
+  }, 2200);
+}
+
+// ══════════════════════════════
+// MEMORY
+// ══════════════════════════════
+function screenMemory(el) {
+  el.innerHTML = `
+  <div class="center">
+    <div style="position:relative;width:100%;max-width:340px;">
+      <div class="fade" id="m1">
+        <div class="mem-emoji" style="background:#fdd6e8;">
+        <img src="images/photo1.jpg" style="width:100%;height:160px;object-fit:cover;"/>
+      </div>
+      </div>
+      <svg width="100%" height="90" viewBox="0 0 320 90" style="display:block;margin:-8px 0;">
+        <path id="mem-line" d="M 115 8 C 115 45, 210 45, 210 82" fill="none" stroke="#e8186d" stroke-width="2.5"/>
+      </svg>
+      <div class="fade" id="m2">
+        <div class="mem-photo" style="width:62%;margin-left:auto;">
+          <div class="mem-emoji" style="background:#fdd6e8;">
+          <img src="images/photo2.jpg" style="width:100%;height:160px;object-fit:cover;"/>
+      </div>
+      </div>
+      <div id="mem-cap" style="opacity:0;transform:translateY(12px);transition:all .7s ease;text-align:center;margin-top:24px;">
+        <p style="color:#888;font-size:1rem;line-height:1.8;">From holding your finger…<br/>to holding your values forever 💞</p>
+        <div style="margin-top:22px;"><button class="btn" onclick="goNext()">Continue 💖</button></div>
+      </div>
+    </div>
+  </div>`;
+
+  setTimeout(() => document.getElementById('m1').classList.add('show'), 200);
+  setTimeout(() => document.getElementById('mem-line').classList.add('drawn'), 500);
+  setTimeout(() => document.getElementById('m2').classList.add('show'), 700);
+  setTimeout(() => {
+    const c = document.getElementById('mem-cap');
+    c.style.opacity = '1'; c.style.transform = 'translateY(0)';
+  }, 1300);
+}
+
+// ══════════════════════════════
+// WHAT YOU MEAN
+// ══════════════════════════════
+function screenWhatYouMean(el) {
+  const TAGS = [
+    {label:"Strong",   top:"4%",   left:"2%"},
+    {label:"Selfless", top:"4%",   right:"2%"},
+    {label:"Brave",top:"40%",  left:"0%"},
+    {label:"Beautiful",top:"40%",  right:"0%"},
+    {label:"My Safe Place",bottom:"12%",left:"2%"},
+    {label:"Biggest Supporter",  bottom:"12%",right:"2%"},
+  ];
+
+  const tagsHtml = TAGS.map((tag, i) => {
+    const {label, ...pos} = tag;
+    const style = Object.entries(pos).map(([k,v])=>`${k}:${v}`).join(';');
+    return `<div class="tag-chip" id="tag${i}" style="${style}">${label}</div>`;
+  }).join('');
+
+  el.innerHTML = `
+  <div id="whatyoumean-section">
+    <div class="center" style="padding-top:40px;">
+      <div class="fade show" style="margin-bottom:24px;">
+        <h2 style="font-size:1.5rem;font-weight:800;" class="grad-text">What You Mean To Me 💖</h2>
+      </div>
+      <div style="position:relative;width:290px;height:310px;">
+        <div id="center-avatar" title="Tap me!">👩</div>
+        ${tagsHtml}
+      </div>
+      <div style="margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:16px;">
+        <button id="heart-btn">❤️</button>
+        <div id="next-btn-wrap" style="display:none;"><button class="btn" onclick="goNext()">Next 💫</button></div>
+      </div>
+      <p style="color:#bbb;font-size:.82rem;margin-top:10px;" id="heart-hint">Tap the heart to reveal ✨</p>
+    </div>
+  </div>`;
+
+  // pulse heart
+  let big = false;
+  const heartBtn = document.getElementById('heart-btn');
+  const iv = setInterval(() => {
+    big = !big;
+    heartBtn.classList.toggle('pulse', big);
+  }, 900);
+
+  let tagsRevealed = false;
+  heartBtn.addEventListener('click', () => {
+    if (tagsRevealed) return;
+    tagsRevealed = true;
+    clearInterval(iv);
+    document.getElementById('heart-hint').style.display = 'none';
+    TAGS.forEach((_, i) => {
+      setTimeout(() => document.getElementById(`tag${i}`).classList.add('show'), i * 300);
+    });
+    setTimeout(() => {
+      document.getElementById('next-btn-wrap').style.display = 'block';
+    }, TAGS.length * 300 + 400);
+  });
+}
+
+// ══════════════════════════════
+// TIMELINE
+// ══════════════════════════════
+function screenTimeline(el) {
+  const TL = [
+    {y:"2006", t:"You welcomed me into the world with open arms and endless love 👶💕", s:"left"},
+    {y:"2009", t:"My first school days — your smile made every goodbye easier 🎒", s:"right"},
+    {y:"2013", t:"You held my hand through every doubt and wiped every tear 💖", s:"left"},
+    {y:"2015", t:"School mornings, your love packed in every lunchbox 🍱", s:"right"},
+    {y:"2018", t:"Late nights of study, you stayed awake with me ☕✨", s:"left"},
+    {y:"2020", t:"Through tough times, you were my rock and my peace 🏡", s:"right"},
+    {y:"2022", t:"Celebrating small wins together, making memories ✨", s:"left"},
+    {y:"2026", t:"Still growing, still learning — always your child ❤️", s:"right"},
+    {y:"Today", t:"Thank you, Mamma. For everything. Forever. 💝", s:"left"},
+  ];
+
+  const itemsHtml = TL.map((item, i) => `
+    <div class="tl-item ${item.s}" data-side="${item.s}">
+      <div class="tl-dot"></div>
+      <div class="tl-card ${item.s}-enter" id="tlcard${i}">
+        <div class="tl-year">${item.y}</div>
+        <div class="tl-text">${item.t}</div>
+      </div>
+    </div>`).join('');
+
+  el.innerHTML = `
+  <div id="timeline-section">
+    <div class="fade show" style="text-align:center;margin-bottom:32px;">
+      <h2 style="font-size:1.6rem;font-weight:800;" class="grad-text">Our Journey Together 💝</h2>
+      <p style="color:#bbb;font-size:.82rem;margin-top:4px;">Every moment with you is a memory I cherish forever</p>
+    </div>
+    <div class="tl-wrap">
+      <div class="tl-line"></div>
+      ${itemsHtml}
+    </div>
+    <div style="text-align:center;padding:12px 0 40px;"><button class="btn" onclick="goNext()">Continue 💌</button></div>
+  </div>`;
+
+  // Intersection observer for cards
+  const cards = el.querySelectorAll('.tl-card');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, {threshold:.3});
+  cards.forEach(c => obs.observe(c));
+}
+
+// ══════════════════════════════
+// CROWN
+// ══════════════════════════════
+function screenCrown(el) {
+  el.innerHTML = `
+  <div class="center">
+    <div class="card" style="padding:24px 20px 30px;">
+      <h2 style="font-size:1.4rem;font-weight:800;color:#e8186d;line-height:1.4;margin-bottom:16px;">You are the Best Mom<br/>in the World 💝</h2>
+      <svg width="280" height="290" viewBox="0 0 280 290" style="display:block;margin:0 auto;overflow:visible;">
+        <!-- LADDER -->
+        <rect x="68" y="48" width="8" height="210" rx="4" fill="#a0522d"/>
+        <rect x="108" y="48" width="8" height="210" rx="4" fill="#a0522d"/>
+        ${[58,76,94,112,130,148,166,184,202,220,238].map(y=>`<rect x="68" y="${y}" width="48" height="7" rx="3.5" fill="#c8762e"/>`).join('')}
+        <ellipse cx="72" cy="260" rx="7" ry="4" fill="#6B3A1A" opacity=".5"/>
+        <ellipse cx="112" cy="260" rx="7" ry="4" fill="#6B3A1A" opacity=".5"/>
+        <!-- MOM -->
+        <g transform="translate(148,32)">
+          <ellipse cx="47" cy="26" rx="25" ry="27" fill="#0d0500"/>
+          <rect x="62" y="30" width="12" height="55" rx="6" fill="#0d0500"/>
+          <circle cx="47" cy="37" r="22" fill="#f2c090"/>
+          <circle cx="47" cy="21" r="2.5" fill="#e8186d"/>
+          <ellipse cx="38" cy="37" rx="4" ry="4.5" fill="#1a0500"/>
+          <ellipse cx="56" cy="37" rx="4" ry="4.5" fill="#1a0500"/>
+          <circle cx="39" cy="35.5" r="1.4" fill="white"/><circle cx="57" cy="35.5" r="1.4" fill="white"/>
+          <path d="M34 33 Q37.5 30.5 41 33" stroke="#1a0500" stroke-width="1.2" fill="none"/>
+          <path d="M52 33 Q55.5 30.5 59 33" stroke="#1a0500" stroke-width="1.2" fill="none"/>
+          <ellipse cx="47" cy="42" rx="2" ry="1.5" fill="#d4a070" opacity=".6"/>
+          <path d="M40 47 Q47 53 54 47" stroke="#b07040" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <circle cx="25" cy="43" r="3.5" fill="#FFD700"/>
+          <line x1="25" y1="46" x2="25" y2="52" stroke="#FFD700" stroke-width="1.5"/>
+          <circle cx="25" cy="52" r="2.5" fill="#e8186d"/>
+          <rect x="40" y="58" width="14" height="12" rx="4" fill="#f2c090"/>
+          <rect x="26" y="60" width="42" height="22" rx="5" fill="#2a68c4"/>
+          <path d="M26 82 Q12 130 18 215 L76 215 Q80 130 68 82 Z" fill="#4a88d4"/>
+          ${[95,110,125,140,155,170,185,200].map(y=>`<line x1="36" y1="${y}" x2="60" y2="${y}" stroke="#f0e0a0" stroke-width="1" opacity=".5"/>`).join('')}
+          <path d="M26 68 Q2 100 8 160" stroke="#2a68c4" stroke-width="15" fill="none" stroke-linecap="round"/>
+          ${[88,103,118,133,148,163,178,193,208].map(y=>`<circle cy="${y}" cx="14" r="2" fill="#f0d080"/>`).join('')}
+          ${[[30,100],[50,115],[35,130],[55,145],[30,160]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="3" fill="#f0e0a0" opacity=".4"/>`).join('')}
+        </g>
+        <!-- CROWN on Mom -->
+        <g id="crown-on-mom">
+          <polygon points="185,30 193,15 201,24 210,8 219,24 227,15 234,30" fill="#FFD700" stroke="#c8a400" stroke-width="1.2"/>
+          <rect x="185" y="28" width="49" height="11" rx="4" fill="#FFD700" stroke="#c8a400" stroke-width="1.2"/>
+          <circle cx="200" cy="18" r="3.5" fill="#e8186d"/>
+          <circle cx="210" cy="10" r="3.5" fill="#7B2FBE"/>
+          <circle cx="220" cy="18" r="3.5" fill="#4a88d4"/>
+        </g>
+        <!-- GIRL GROUP -->
+        <g id="girl-group">
+          <!-- ponytail -->
+          <ellipse cx="90" cy="163" rx="17" ry="12" fill="#b85500"/>
+          <ellipse cx="75" cy="168" rx="7" ry="6" fill="#b85500"/>
+          <circle cx="76" cy="162" r="4" fill="#e8186d"/>
+          <!-- face -->
+          <circle cx="90" cy="171" r="15" fill="#f5c8a0"/>
+          <circle cx="84" cy="170" r="2.3" fill="#222"/>
+          <circle cx="96" cy="170" r="2.3" fill="#222"/>
+          <circle cx="84.8" cy="169" r=".8" fill="white"/>
+          <circle cx="96.8" cy="169" r=".8" fill="white"/>
+          <ellipse cx="79" cy="174" rx="4" ry="2.5" fill="#ffb3cc" opacity=".7"/>
+          <ellipse cx="101" cy="174" rx="4" ry="2.5" fill="#ffb3cc" opacity=".7"/>
+          <path d="M84 177 Q90 182 97 177" stroke="#c07040" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- dress -->
+          <rect x="77" y="185" width="26" height="30" rx="5" fill="#ff85a2"/>
+          <rect x="81" y="185" width="18" height="11" rx="3" fill="#ffd6e7"/>
+          <!-- legs -->
+          <rect x="80" y="213" width="8" height="16" rx="4" fill="#f5c8a0"/>
+          <rect x="92" y="213" width="8" height="16" rx="4" fill="#f5c8a0"/>
+          <ellipse cx="84" cy="230" rx="6" ry="4" fill="#555"/>
+          <ellipse cx="96" cy="230" rx="6" ry="4" fill="#555"/>
+          <!-- arm -->
+          <line id="girl-arm" x1="103" y1="191" x2="115" y2="179" stroke="#f5c8a0" stroke-width="7" stroke-linecap="round"/>
+          <!-- crown in hand -->
+          <g id="crown-in-hand" transform="translate(104,169)">
+            <polygon points="0,14 5,3 11,9 17,0 23,9 29,3 34,14" fill="#FFD700" stroke="#c8a400" stroke-width=".8"/>
+            <rect x="0" y="12" width="34" height="8" rx="2.5" fill="#FFD700" stroke="#c8a400" stroke-width=".8"/>
+            <circle cx="11" cy="5" r="2" fill="#e8186d"/>
+            <circle cx="17" cy="1" r="2" fill="#7B2FBE"/>
+            <circle cx="23" cy="5" r="2" fill="#4a88d4"/>
+          </g>
+        </g>
+      </svg>
+      <div id="crown-controls" style="margin-top:16px;">
+        <button class="btn" id="climb-btn" onclick="startClimb()">Continue 💖</button>
+        <p id="climbing-msg" style="display:none;color:#e8186d;font-weight:600;animation:pulse 1s ease infinite;">Crowning her... 👑</p>
+        <div id="crowned-msg" style="display:none;">
+          <p style="color:#e8186d;font-weight:700;font-size:1rem;margin-bottom:14px;">👑 You are officially crowned! ✨</p>
+          <button class="btn" onclick="goNext()">Continue 💫</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function startClimb() {
+  document.getElementById('climb-btn').style.display = 'none';
+  document.getElementById('climbing-msg').style.display = 'block';
+  // move girl up
+  document.getElementById('girl-group').style.transform = 'translateY(-95px)';
+  document.getElementById('girl-arm').setAttribute('x2','125');
+  document.getElementById('girl-arm').setAttribute('y2','158');
+  document.getElementById('crown-in-hand').style.transform = 'translate(112px,-10px)';
+
+  setTimeout(() => {
+    // show crown on mom, hide crown in hand
+    document.getElementById('crown-on-mom').classList.add('show');
+    document.getElementById('crown-in-hand').style.opacity = '0';
+    document.getElementById('climbing-msg').style.display = 'none';
+    document.getElementById('crowned-msg').style.display = 'block';
+  }, 2000);
+}
+
+// ══════════════════════════════
+// WOW
+// ══════════════════════════════
+function screenWow(el) {
+  el.innerHTML = `
+  <div class="center">
+    <div class="card" style="padding:48px 32px;">
+      <div class="fade show"><p style="color:#bbb;font-size:1rem;margin-bottom:16px;">Turns everything into</p></div>
+      <div id="flip-box" onclick="doFlip()">
+        <div id="flip-inner">
+          <div class="flip-face" id="flip-front">MOM!</div>
+          <div class="flip-face" id="flip-back">WOW!</div>
+        </div>
+      </div>
+      <div id="wow-hint" class="fade show" style="margin-top:8px;">
+        <p style="color:#ccc;font-size:.85rem;margin-bottom:16px;">Tap the text above ✨</p>
+        <button class="btn" onclick="doFlip()">Tap to See Magic ✨</button>
+      </div>
+      <div id="wow-next-btn" style="display:none;animation:fadeUp .5s ease both;">
+        <button class="btn" onclick="goNext()">Click ✨</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function doFlip() {
+  const inner = document.getElementById('flip-inner');
+  if (inner.classList.contains('flipped')) return;
+  inner.classList.add('flipped');
+  document.getElementById('wow-hint').style.display = 'none';
+  setTimeout(() => {
+    document.getElementById('wow-next-btn').style.display = 'block';
+  }, 900);
+}
+
+// ══════════════════════════════
+// CANDLE
+// ══════════════════════════════
+function screenCandle(el) {
+  el.innerHTML = `
+  <div class="center">
+    <div class="card" style="padding:44px 24px;">
+      <div id="candle-text" style="display:none;margin-bottom:28px;animation:fadeUp .7s ease both;">
+        <p style="font-size:1.1rem;font-weight:700;color:#e8186d;line-height:1.7;">
+          You light up my world 💖<br/><span style="color:#ffaa00;">like no one else ever could ✨</span>
+        </p>
+      </div>
+      <div id="candle-wrap">
+        <div id="glow-ring"></div>
+        <svg width="80" height="190" viewBox="0 0 80 190">
+          <defs>
+            <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#c40060"/><stop offset="50%" stop-color="#e8186d"/><stop offset="100%" stop-color="#f08090"/>
+            </linearGradient>
+          </defs>
+          <rect x="22" y="55" width="36" height="125" rx="9" fill="url(#cg)"/>
+          <rect x="26" y="63" width="10" height="110" rx="5" fill="rgba(255,255,255,.18)"/>
+          <ellipse cx="40" cy="55" rx="18" ry="7" fill="#f08090"/>
+          <ellipse cx="40" cy="180" rx="18" ry="7" fill="#a00050"/>
+          <rect x="38" y="40" width="4" height="18" rx="2" fill="#5a3010"/>
+          <g id="flame-group">
+            <ellipse cx="40" cy="26" rx="10" ry="22" fill="#FFD700" opacity=".9"/>
+            <ellipse cx="40" cy="30" rx="7" ry="16" fill="#FFA500" opacity=".85"/>
+            <ellipse cx="40" cy="34" rx="3.5" ry="9" fill="#FF6600" opacity=".7"/>
+            <ellipse cx="40" cy="38" rx="2" ry="5" fill="#88aaff" opacity=".5"/>
+          </g>
+        </svg>
+      </div>
+      <div style="margin-top:16px;" id="candle-btn-wrap">
+        <button class="btn" onclick="lightCandle()">Light the Candle 🕯️</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function lightCandle() {
+  document.getElementById('flame-group').classList.add('lit');
+  document.getElementById('glow-ring').classList.add('lit');
+  document.getElementById('candle-text').style.display = 'block';
+  document.getElementById('candle-btn-wrap').innerHTML = '<button class="btn" onclick="goNext()" style="margin-top:8px;">Continue 💌</button>';
+}
+
+// ══════════════════════════════
+// LETTER
+// ══════════════════════════════
+function screenLetter(el) {
+  el.innerHTML = `
+  <div class="center" style="padding:16px 20px 48px;justify-content:flex-start;padding-top:60px;">
+    <div id="envelope-section" style="display:flex;flex-direction:column;align-items:center;gap:28px;">
+      <div class="fade" id="env-label"><p style="color:#888;font-size:1rem;">A letter for you, Mamma 💌</p></div>
+      <div class="fade" id="env-svg">
+        <div id="envelope-wrap" onclick="openEnvelope()">
+          <svg width="260" height="190" viewBox="0 0 260 190">
+            <defs>
+              <linearGradient id="eg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#fff0f6"/><stop offset="100%" stop-color="#fdd6e8"/>
+              </linearGradient>
+            </defs>
+            <rect x="4" y="40" width="252" height="144" rx="12" fill="url(#eg)" stroke="#e8186d" stroke-width="2"/>
+            ${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${4+i*32}" y="40" width="16" height="10" fill="#e8186d" opacity=".2" rx="1"/>`).join('')}
+            <path d="M4 184 L130 108 L256 184" fill="#fce0ec" stroke="#e8186d" stroke-width="1.5"/>
+            <path d="M4 40 L130 108 L4 184" fill="#fdd6e8" stroke="#e8186d" stroke-width="1.5"/>
+            <path d="M256 40 L130 108 L256 184" fill="#fdd6e8" stroke="#e8186d" stroke-width="1.5"/>
+            <g id="env-flap">
+              <path d="M4 40 L130 108 L256 40" fill="#f5a0c0" stroke="#e8186d" stroke-width="1.5"/>
+            </g>
+            <g id="env-seal">
+              <circle cx="130" cy="108" r="22" fill="#e8186d" opacity=".15"/>
+              <text x="130" y="116" font-size="26" text-anchor="middle">💌</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="fade" id="env-btn"><button class="btn" onclick="openEnvelope()">Open the Letter 💌</button></div>
+    </div>
+
+    <div id="letter-content" style="width:100%;max-width:400px;">
+      <div style="background:white;border-radius:20px;padding:28px 22px;box-shadow:0 8px 40px #e8186d18;position:relative;overflow:hidden;text-align:left;">
+        <div class="letter-stripe"></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:16px;margin-bottom:18px;">
+          <div>
+            <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px;">
+              <span style="color:#777;font-size:.95rem;font-family:Georgia,serif;">To:</span>
+              <span style="font-weight:700;color:#333;font-size:1rem;">Mamma 💝</span>
+            </div>
+            <div style="width:130px;height:1.5px;background:#fdd6e8;margin-bottom:10px;"></div>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="color:#777;font-size:.95rem;font-family:Georgia,serif;">From:</span>
+              <span style="font-weight:700;color:#e8186d;font-size:1rem;">Nabeela</span>
+            </div>
+            <div style="width:130px;height:1.5px;background:#fdd6e8;"></div>
+          </div>
+          <div style="width:68px;height:68px;border-radius:10px;border:2.5px solid #f06090;background:linear-gradient(135deg,#fdd6e8,#ffe4c4);display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 4px 12px #e8186d18;"><img src="images/photo3.jpg" style="width:100%;height:160px;object-fit:cover;"/>
+</div></div>
+        </div>
+        <div class="letter-body">
+          <p style="margin-bottom:14px;"><strong>Dear Mamma,</strong></p>
+          <p style="margin-bottom:14px;">I may not say this every day, but you are the reason behind everything good in my life. Your love, your strength, and your sacrifices have shaped me into who I am today.</p>
+          <p style="margin-bottom:14px;">You are my safe place, my biggest support, and my forever home. No matter where life takes me, I will always carry your values in my heart.</p>
+          <p style="margin-bottom:14px;">Thank you for everything… for your endless love, your care, and for always believing in me.</p>
+          <p style="margin-bottom:22px;">I love you more than words can ever express ❤️</p>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;">
+          <div style="width:52px;height:62px;border:2px solid #e8186d;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:1.7rem;background:#fff5f8;">💌</div>
+          <div style="width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 40% 40%,#f06090,#e8186d);display:flex;align-items:center;justify-content:center;font-size:1.5rem;box-shadow:0 3px 10px #e8186d44;">🎀</div>
+        </div>
+        <div style="text-align:center;">
+          <button class="btn" onclick="goNext()">See What You Mean To Me 💫</button>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  setTimeout(() => document.getElementById('env-label').classList.add('show'), 100);
+  setTimeout(() => document.getElementById('env-svg').classList.add('show'), 300);
+  setTimeout(() => document.getElementById('env-btn').classList.add('show'), 550);
+}
+
+function openEnvelope() {
+  const envSection = document.getElementById('envelope-section');
+  if (!envSection) return;
+  const flap = document.getElementById('env-flap');
+  const seal = document.getElementById('env-seal');
+  flap.classList.add('open');
+  seal.style.opacity = '0';
+  setTimeout(() => {
+    envSection.style.display = 'none';
+    document.getElementById('letter-content').classList.add('show');
+  }, 900);
+}
+
+// ══════════════════════════════
+// FINAL
+// ══════════════════════════════
+function screenFinal(el) {
+  const emojis = ["❤️","💖","💕","🌸","✨","🌷"];
+  el.innerHTML = `
+  <div class="center">
+    <div class="fade show">
+      <div class="card">
+        <div style="font-size:5rem;margin-bottom:16px;">👩‍👧</div>
+        <h2 style="font-size:1.7rem;font-weight:900;margin-bottom:12px;line-height:1.4;" class="grad-text">Happy Mother's Day 💖</h2>
+        <p style="color:#999;font-size:.95rem;line-height:1.7;margin-bottom:28px;">
+          Thank you for being you, Mamma. For every hug, every word, every sacrifice — this is for you. ✨
+        </p>
+        <div style="display:inline-block;padding:16px 32px;border-radius:99px;background:linear-gradient(135deg,#e8186d,#f06090);color:white;font-weight:700;font-size:1.05rem;box-shadow:0 4px 20px #e8186d44;">
+          With all my love 💖 Nabeela
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+  // floating hearts
+  setInterval(() => {
+    const h = document.createElement('div');
+    h.className = 'floating-heart';
+    h.style.left = (8 + Math.random() * 84) + '%';
+    h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 3600);
+  }, 450);
+}
+
+// ══════════════════════════════
+// SCREEN MAP
+// ══════════════════════════════
+const screens = [
+  screenLanding,
+  screenRainbow,
+  screenMemory,
+  screenWhatYouMean,
+  screenTimeline,
+  screenCrown,
+  screenWow,
+  screenCandle,
+  screenLetter,
+  screenFinal,
+];
+
+// ══════════════════════════════
+// INIT
+// ══════════════════════════════
+renderDots();
+renderScreen();
+</script>
+</body>
+</html>
